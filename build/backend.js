@@ -13,11 +13,11 @@ require("source-map-support").install();
 /******/ 		}
 /******/ 		callback(null, update);
 /******/ 	}
-/******/
+
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5b2c5229e4fcbdeddd23"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ca7ed1916c6134aed109"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -40,33 +40,47 @@ require("source-map-support").install();
 /******/ 		};
 /******/ 		for(var name in __webpack_require__) {
 /******/ 			if(Object.prototype.hasOwnProperty.call(__webpack_require__, name)) {
-/******/ 				fn[name] = __webpack_require__[name];
+/******/ 				Object.defineProperty(fn, name, (function(name) {
+/******/ 					return {
+/******/ 						configurable: true,
+/******/ 						enumerable: true,
+/******/ 						get: function() {
+/******/ 							return __webpack_require__[name];
+/******/ 						},
+/******/ 						set: function(value) {
+/******/ 							__webpack_require__[name] = value;
+/******/ 						}
+/******/ 					};
+/******/ 				}(name)));
 /******/ 			}
 /******/ 		}
-/******/ 		fn.e = function(chunkId, callback) {
-/******/ 			if(hotStatus === "ready")
-/******/ 				hotSetStatus("prepare");
-/******/ 			hotChunksLoading++;
-/******/ 			__webpack_require__.e(chunkId, function() {
-/******/ 				try {
-/******/ 					callback.call(null, fn);
-/******/ 				} finally {
-/******/ 					finishChunkLoading();
-/******/ 				}
+/******/ 		Object.defineProperty(fn, "e", {
+/******/ 			enumerable: true,
+/******/ 			value: function(chunkId, callback) {
+/******/ 				if(hotStatus === "ready")
+/******/ 					hotSetStatus("prepare");
+/******/ 				hotChunksLoading++;
+/******/ 				__webpack_require__.e(chunkId, function() {
+/******/ 					try {
+/******/ 						callback.call(null, fn);
+/******/ 					} finally {
+/******/ 						finishChunkLoading();
+/******/ 					}
 /******/ 	
-/******/ 				function finishChunkLoading() {
-/******/ 					hotChunksLoading--;
-/******/ 					if(hotStatus === "prepare") {
-/******/ 						if(!hotWaitingFilesMap[chunkId]) {
-/******/ 							hotEnsureUpdateChunk(chunkId);
-/******/ 						}
-/******/ 						if(hotChunksLoading === 0 && hotWaitingFiles === 0) {
-/******/ 							hotUpdateDownloaded();
+/******/ 					function finishChunkLoading() {
+/******/ 						hotChunksLoading--;
+/******/ 						if(hotStatus === "prepare") {
+/******/ 							if(!hotWaitingFilesMap[chunkId]) {
+/******/ 								hotEnsureUpdateChunk(chunkId);
+/******/ 							}
+/******/ 							if(hotChunksLoading === 0 && hotWaitingFiles === 0) {
+/******/ 								hotUpdateDownloaded();
+/******/ 							}
 /******/ 						}
 /******/ 					}
-/******/ 				}
-/******/ 			});
-/******/ 		};
+/******/ 				});
+/******/ 			}
+/******/ 		});
 /******/ 		return fn;
 /******/ 	}
 /******/ 	
@@ -459,17 +473,17 @@ require("source-map-support").install();
 /******/ 		hotSetStatus("idle");
 /******/ 		callback(null, outdatedModules);
 /******/ 	}
-/******/
+
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
@@ -479,30 +493,30 @@ require("source-map-support").install();
 /******/ 			parents: hotCurrentParents,
 /******/ 			children: []
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, hotCreateRequire(moduleId));
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return hotCreateRequire(0)(0);
 /******/ })
@@ -511,791 +525,52 @@ require("source-map-support").install();
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(15);
-	module.exports = __webpack_require__(2);
+	__webpack_require__(1);
+	module.exports = __webpack_require__(12);
 
 
 /***/ },
-/* 1 */,
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	eval("/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*\r\n\tMIT License http://www.opensource.org/licenses/mit-license.php\r\n\tAuthor Tobias Koppers @sokra\r\n*/\r\n/*globals __resourceQuery */\r\nif(true) {\r\n\tfunction checkForUpdate(fromUpdate) {\r\n\t\tmodule.hot.check(function(err, updatedModules) {\r\n\t\t\tif(err) {\r\n\t\t\t\tif(module.hot.status() in {\r\n\t\t\t\t\t\tabort: 1,\r\n\t\t\t\t\t\tfail: 1\r\n\t\t\t\t\t}) {\r\n\t\t\t\t\tconsole.warn(\"[HMR] Cannot apply update.\");\r\n\t\t\t\t\tconsole.warn(\"[HMR] \" + err.stack || err.message);\r\n\t\t\t\t\tconsole.warn(\"[HMR] You need to restart the application!\");\r\n\t\t\t\t} else {\r\n\t\t\t\t\tconsole.warn(\"[HMR] Update failed: \" + err.stack || err.message);\r\n\t\t\t\t}\r\n\t\t\t\treturn;\r\n\t\t\t}\r\n\t\t\tif(!updatedModules) {\r\n\t\t\t\tif(fromUpdate)\r\n\t\t\t\t\tconsole.log(\"[HMR] Update applied.\");\r\n\t\t\t\telse\r\n\t\t\t\t\tconsole.warn(\"[HMR] Cannot find update.\");\r\n\t\t\t\treturn;\r\n\t\t\t}\r\n\r\n\t\t\tmodule.hot.apply({\r\n\t\t\t\tignoreUnaccepted: true\r\n\t\t\t}, function(err, renewedModules) {\r\n\t\t\t\tif(err) {\r\n\t\t\t\t\tif(module.hot.status() in {\r\n\t\t\t\t\t\t\tabort: 1,\r\n\t\t\t\t\t\t\tfail: 1\r\n\t\t\t\t\t\t}) {\r\n\t\t\t\t\t\tconsole.warn(\"[HMR] Cannot apply update (Need to do a full reload!)\");\r\n\t\t\t\t\t\tconsole.warn(\"[HMR] \" + err.stack || err.message);\r\n\t\t\t\t\t\tconsole.warn(\"[HMR] You need to restart the application!\");\r\n\t\t\t\t\t} else {\r\n\t\t\t\t\t\tconsole.warn(\"[HMR] Update failed: \" + err.stack || err.message);\r\n\t\t\t\t\t}\r\n\t\t\t\t\treturn;\r\n\t\t\t\t}\r\n\r\n\t\t\t\t__webpack_require__(2)(updatedModules, renewedModules);\r\n\r\n\t\t\t\tcheckForUpdate(true);\r\n\t\t\t});\r\n\t\t});\r\n\t}\r\n\r\n\tprocess.on(__resourceQuery.substr(1) || \"SIGUSR2\", function() {\r\n\t\tif(module.hot.status() !== \"idle\") {\r\n\t\t\tconsole.warn(\"[HMR] Got signal but currently in \" + module.hot.status() + \" state.\");\r\n\t\t\tconsole.warn(\"[HMR] Need to be in idle state to start hot update.\");\r\n\t\t\treturn;\r\n\t\t}\r\n\r\n\t\tcheckForUpdate();\r\n\t});\r\n} else {\r\n\tthrow new Error(\"[HMR] Hot Module Replacement is disabled.\");\r\n}\r\n\n/* WEBPACK VAR INJECTION */}.call(exports, \"\"))\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vKHdlYnBhY2spL2hvdC9zaWduYWwuanM/NzNkMiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxNQUFNO0FBQ047QUFDQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBLElBQUk7QUFDSjtBQUNBO0FBQ0E7QUFDQTtBQUNBLE9BQU87QUFDUDtBQUNBO0FBQ0E7QUFDQSxNQUFNO0FBQ047QUFDQTtBQUNBO0FBQ0E7O0FBRUE7O0FBRUE7QUFDQSxJQUFJO0FBQ0osR0FBRztBQUNIOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBLEVBQUU7QUFDRixDQUFDO0FBQ0Q7QUFDQSIsImZpbGUiOiIxLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuXHRNSVQgTGljZW5zZSBodHRwOi8vd3d3Lm9wZW5zb3VyY2Uub3JnL2xpY2Vuc2VzL21pdC1saWNlbnNlLnBocFxyXG5cdEF1dGhvciBUb2JpYXMgS29wcGVycyBAc29rcmFcclxuKi9cclxuLypnbG9iYWxzIF9fcmVzb3VyY2VRdWVyeSAqL1xyXG5pZihtb2R1bGUuaG90KSB7XHJcblx0ZnVuY3Rpb24gY2hlY2tGb3JVcGRhdGUoZnJvbVVwZGF0ZSkge1xyXG5cdFx0bW9kdWxlLmhvdC5jaGVjayhmdW5jdGlvbihlcnIsIHVwZGF0ZWRNb2R1bGVzKSB7XHJcblx0XHRcdGlmKGVycikge1xyXG5cdFx0XHRcdGlmKG1vZHVsZS5ob3Quc3RhdHVzKCkgaW4ge1xyXG5cdFx0XHRcdFx0XHRhYm9ydDogMSxcclxuXHRcdFx0XHRcdFx0ZmFpbDogMVxyXG5cdFx0XHRcdFx0fSkge1xyXG5cdFx0XHRcdFx0Y29uc29sZS53YXJuKFwiW0hNUl0gQ2Fubm90IGFwcGx5IHVwZGF0ZS5cIik7XHJcblx0XHRcdFx0XHRjb25zb2xlLndhcm4oXCJbSE1SXSBcIiArIGVyci5zdGFjayB8fCBlcnIubWVzc2FnZSk7XHJcblx0XHRcdFx0XHRjb25zb2xlLndhcm4oXCJbSE1SXSBZb3UgbmVlZCB0byByZXN0YXJ0IHRoZSBhcHBsaWNhdGlvbiFcIik7XHJcblx0XHRcdFx0fSBlbHNlIHtcclxuXHRcdFx0XHRcdGNvbnNvbGUud2FybihcIltITVJdIFVwZGF0ZSBmYWlsZWQ6IFwiICsgZXJyLnN0YWNrIHx8IGVyci5tZXNzYWdlKTtcclxuXHRcdFx0XHR9XHJcblx0XHRcdFx0cmV0dXJuO1xyXG5cdFx0XHR9XHJcblx0XHRcdGlmKCF1cGRhdGVkTW9kdWxlcykge1xyXG5cdFx0XHRcdGlmKGZyb21VcGRhdGUpXHJcblx0XHRcdFx0XHRjb25zb2xlLmxvZyhcIltITVJdIFVwZGF0ZSBhcHBsaWVkLlwiKTtcclxuXHRcdFx0XHRlbHNlXHJcblx0XHRcdFx0XHRjb25zb2xlLndhcm4oXCJbSE1SXSBDYW5ub3QgZmluZCB1cGRhdGUuXCIpO1xyXG5cdFx0XHRcdHJldHVybjtcclxuXHRcdFx0fVxyXG5cclxuXHRcdFx0bW9kdWxlLmhvdC5hcHBseSh7XHJcblx0XHRcdFx0aWdub3JlVW5hY2NlcHRlZDogdHJ1ZVxyXG5cdFx0XHR9LCBmdW5jdGlvbihlcnIsIHJlbmV3ZWRNb2R1bGVzKSB7XHJcblx0XHRcdFx0aWYoZXJyKSB7XHJcblx0XHRcdFx0XHRpZihtb2R1bGUuaG90LnN0YXR1cygpIGluIHtcclxuXHRcdFx0XHRcdFx0XHRhYm9ydDogMSxcclxuXHRcdFx0XHRcdFx0XHRmYWlsOiAxXHJcblx0XHRcdFx0XHRcdH0pIHtcclxuXHRcdFx0XHRcdFx0Y29uc29sZS53YXJuKFwiW0hNUl0gQ2Fubm90IGFwcGx5IHVwZGF0ZSAoTmVlZCB0byBkbyBhIGZ1bGwgcmVsb2FkISlcIik7XHJcblx0XHRcdFx0XHRcdGNvbnNvbGUud2FybihcIltITVJdIFwiICsgZXJyLnN0YWNrIHx8IGVyci5tZXNzYWdlKTtcclxuXHRcdFx0XHRcdFx0Y29uc29sZS53YXJuKFwiW0hNUl0gWW91IG5lZWQgdG8gcmVzdGFydCB0aGUgYXBwbGljYXRpb24hXCIpO1xyXG5cdFx0XHRcdFx0fSBlbHNlIHtcclxuXHRcdFx0XHRcdFx0Y29uc29sZS53YXJuKFwiW0hNUl0gVXBkYXRlIGZhaWxlZDogXCIgKyBlcnIuc3RhY2sgfHwgZXJyLm1lc3NhZ2UpO1xyXG5cdFx0XHRcdFx0fVxyXG5cdFx0XHRcdFx0cmV0dXJuO1xyXG5cdFx0XHRcdH1cclxuXHJcblx0XHRcdFx0cmVxdWlyZShcIi4vbG9nLWFwcGx5LXJlc3VsdFwiKSh1cGRhdGVkTW9kdWxlcywgcmVuZXdlZE1vZHVsZXMpO1xyXG5cclxuXHRcdFx0XHRjaGVja0ZvclVwZGF0ZSh0cnVlKTtcclxuXHRcdFx0fSk7XHJcblx0XHR9KTtcclxuXHR9XHJcblxyXG5cdHByb2Nlc3Mub24oX19yZXNvdXJjZVF1ZXJ5LnN1YnN0cigxKSB8fCBcIlNJR1VTUjJcIiwgZnVuY3Rpb24oKSB7XHJcblx0XHRpZihtb2R1bGUuaG90LnN0YXR1cygpICE9PSBcImlkbGVcIikge1xyXG5cdFx0XHRjb25zb2xlLndhcm4oXCJbSE1SXSBHb3Qgc2lnbmFsIGJ1dCBjdXJyZW50bHkgaW4gXCIgKyBtb2R1bGUuaG90LnN0YXR1cygpICsgXCIgc3RhdGUuXCIpO1xyXG5cdFx0XHRjb25zb2xlLndhcm4oXCJbSE1SXSBOZWVkIHRvIGJlIGluIGlkbGUgc3RhdGUgdG8gc3RhcnQgaG90IHVwZGF0ZS5cIik7XHJcblx0XHRcdHJldHVybjtcclxuXHRcdH1cclxuXHJcblx0XHRjaGVja0ZvclVwZGF0ZSgpO1xyXG5cdH0pO1xyXG59IGVsc2Uge1xyXG5cdHRocm93IG5ldyBFcnJvcihcIltITVJdIEhvdCBNb2R1bGUgUmVwbGFjZW1lbnQgaXMgZGlzYWJsZWQuXCIpO1xyXG59XHJcblxuXG5cbi8qKioqKioqKioqKioqKioqKlxuICoqIFdFQlBBQ0sgRk9PVEVSXG4gKiogKHdlYnBhY2spL2hvdC9zaWduYWwuanNcbiAqKiBtb2R1bGUgaWQgPSAxXG4gKiogbW9kdWxlIGNodW5rcyA9IDBcbiAqKi8iXSwic291cmNlUm9vdCI6IiJ9");
+
+/***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	"use strict";
-	
-	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
-	
-	var server = _interopRequire(__webpack_require__(3));
-	
-	console.log("Listening on port 4000...");
-	server.listen(4000);
-	
-	/* HOT PATCH LOADER */ var __moduleBindings = []; if(true) {
-	  module.hot.accept(function(err) {
-	    console.log('[HMR] Error accepting: ' + err);
-	  });
-
-	  var getEvalSource = function(func) {
-	    var code = func.toString();
-	    var m = code.match(/^function\s+__eval\s*\((.*)\)\s*\{([\s\S]*)\}$/i);
-	    if(!m) {
-	      return null;
-	    }
-	    var args = m[1];
-	    var body = m[2];
-	    var scope = {};
-
-	    if(args.trim()) {
-	      args.split(',').forEach(function(arg) {
-	        if(arg.indexOf('=') !== -1) {
-	          var p = arg.split('=');
-	          scope[p[0].trim()] = JSON.parse(p[1]);
-	        }
-	        else {
-	          scope[arg.trim()] = undefined;
-	        }
-	      });
-	    }
-
-	    return { body: body, scope: scope };
-	  }
-
-	  var injectScope = function(scope, code) {
-	    // Take an explicit scope object and inject it so that
-	    // `code` runs in context of it
-	    var injected = Object.keys(scope).map(function(binding) {
-	      return 'var ' + binding + ' = evalScope.' + binding + ';'
-	    }).join(' ');
-
-	    // Update our scope object with any modifications
-	    var extracted = Object.keys(scope).map(function(binding) {
-	      return 'evalScope.' + binding + ' = ' + binding + ';';
-	    }).join(' ');
-
-	    return injected + code + extracted;
-	  }
-
-	  var bindings = __moduleBindings;
-
-	  if(!module.hot.data) {
-	    // First time loading. Try and patch something.
-	    var patchedBindings = {};
-	    var evalScope = {};
-
-	    var moduleEvalWithScope = function(frame) {
-	      // Update the scope to reflect only the values specified as
-	      // arguments to the __eval function. Copy over values from the
-	      // existing scope and ignore the rest.
-	      Object.keys(evalScope).forEach(function(arg) {
-	        if(arg in frame.scope) {
-	          frame.scope[arg] = evalScope[arg];
-	        }
-	      });
-	      evalScope = frame.scope;
-
-	      var code = injectScope(evalScope, frame.body);
-	      return eval(code);
-	    }
-
-	    var moduleEval = function(code) {
-	      return eval(code);
-	    }
-
-	    bindings.forEach(function(binding) {
-	      var f = eval(binding);
-
-	      if(typeof f === 'function' && binding !== '__eval') {
-	        var patched = function() {
-	          if(patchedBindings[binding]) {
-	            return patchedBindings[binding].apply(this, arguments);
-	          }
-	          else {
-	            return f.apply(this, arguments);
-	          }
-	        };
-	        patched.prototype = f.prototype;
-
-	        eval(binding + ' = patched;\n');
-
-	        if(module.exports[binding]) {
-	          module.exports[binding] = patched;
-	        }
-	      }
-	    });
-
-	    module.hot.dispose(function(data) {
-	      data.patchedBindings = patchedBindings;
-	      data.moduleEval = moduleEval;
-	      data.moduleEvalWithScope = moduleEvalWithScope;
-	    });
-	  }
-	  else {
-	    var patchedBindings = module.hot.data.patchedBindings;
-
-	    bindings.forEach(function(binding) {
-	      var f = eval(binding);
-
-	      if(typeof f === 'function' && binding !== '__eval') {
-	        // We need to reify the function in the original module so
-	        // it references any of the original state. Strip the name
-	        // and simply eval it.
-	        var funcCode = (
-	          '(' + f.toString().replace(/^function \w+\(/, 'function (') + ')'
-	        );
-	        patchedBindings[binding] = module.hot.data.moduleEval(funcCode);
-	      }
-	    });
-
-	    if(typeof __eval === 'function') {
-	      try {
-	        module.hot.data.moduleEvalWithScope(getEvalSource(__eval));
-	      }
-	      catch(e) {
-	        console.log('error evaling: ' + e);
-	      }
-	    }
-
-	    module.hot.dispose(function(data) {
-	      data.patchedBindings = patchedBindings;
-	      data.moduleEval = module.hot.data.moduleEval;
-	      data.moduleEvalWithScope = module.hot.data.moduleEvalWithScope;
-	    });
-	  }
-	}
-
+	eval("/*\r\n\tMIT License http://www.opensource.org/licenses/mit-license.php\r\n\tAuthor Tobias Koppers @sokra\r\n*/\r\nmodule.exports = function(updatedModules, renewedModules) {\r\n\tvar unacceptedModules = updatedModules.filter(function(moduleId) {\r\n\t\treturn renewedModules && renewedModules.indexOf(moduleId) < 0;\r\n\t});\r\n\r\n\tif(unacceptedModules.length > 0) {\r\n\t\tconsole.warn(\"[HMR] The following modules couldn't be hot updated: (They would need a full reload!)\");\r\n\t\tunacceptedModules.forEach(function(moduleId) {\r\n\t\t\tconsole.warn(\"[HMR]  - \" + moduleId);\r\n\t\t});\r\n\t}\r\n\r\n\tif(!renewedModules || renewedModules.length === 0) {\r\n\t\tconsole.log(\"[HMR] Nothing hot updated.\");\r\n\t} else {\r\n\t\tconsole.log(\"[HMR] Updated modules:\");\r\n\t\trenewedModules.forEach(function(moduleId) {\r\n\t\t\tconsole.log(\"[HMR]  - \" + moduleId);\r\n\t\t});\r\n\t}\r\n};\r\n\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vKHdlYnBhY2spL2hvdC9sb2ctYXBwbHktcmVzdWx0LmpzP2Q3NjIiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxFQUFFOztBQUVGO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsR0FBRztBQUNIOztBQUVBO0FBQ0E7QUFDQSxFQUFFO0FBQ0Y7QUFDQTtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0EiLCJmaWxlIjoiMi5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8qXHJcblx0TUlUIExpY2Vuc2UgaHR0cDovL3d3dy5vcGVuc291cmNlLm9yZy9saWNlbnNlcy9taXQtbGljZW5zZS5waHBcclxuXHRBdXRob3IgVG9iaWFzIEtvcHBlcnMgQHNva3JhXHJcbiovXHJcbm1vZHVsZS5leHBvcnRzID0gZnVuY3Rpb24odXBkYXRlZE1vZHVsZXMsIHJlbmV3ZWRNb2R1bGVzKSB7XHJcblx0dmFyIHVuYWNjZXB0ZWRNb2R1bGVzID0gdXBkYXRlZE1vZHVsZXMuZmlsdGVyKGZ1bmN0aW9uKG1vZHVsZUlkKSB7XHJcblx0XHRyZXR1cm4gcmVuZXdlZE1vZHVsZXMgJiYgcmVuZXdlZE1vZHVsZXMuaW5kZXhPZihtb2R1bGVJZCkgPCAwO1xyXG5cdH0pO1xyXG5cclxuXHRpZih1bmFjY2VwdGVkTW9kdWxlcy5sZW5ndGggPiAwKSB7XHJcblx0XHRjb25zb2xlLndhcm4oXCJbSE1SXSBUaGUgZm9sbG93aW5nIG1vZHVsZXMgY291bGRuJ3QgYmUgaG90IHVwZGF0ZWQ6IChUaGV5IHdvdWxkIG5lZWQgYSBmdWxsIHJlbG9hZCEpXCIpO1xyXG5cdFx0dW5hY2NlcHRlZE1vZHVsZXMuZm9yRWFjaChmdW5jdGlvbihtb2R1bGVJZCkge1xyXG5cdFx0XHRjb25zb2xlLndhcm4oXCJbSE1SXSAgLSBcIiArIG1vZHVsZUlkKTtcclxuXHRcdH0pO1xyXG5cdH1cclxuXHJcblx0aWYoIXJlbmV3ZWRNb2R1bGVzIHx8IHJlbmV3ZWRNb2R1bGVzLmxlbmd0aCA9PT0gMCkge1xyXG5cdFx0Y29uc29sZS5sb2coXCJbSE1SXSBOb3RoaW5nIGhvdCB1cGRhdGVkLlwiKTtcclxuXHR9IGVsc2Uge1xyXG5cdFx0Y29uc29sZS5sb2coXCJbSE1SXSBVcGRhdGVkIG1vZHVsZXM6XCIpO1xyXG5cdFx0cmVuZXdlZE1vZHVsZXMuZm9yRWFjaChmdW5jdGlvbihtb2R1bGVJZCkge1xyXG5cdFx0XHRjb25zb2xlLmxvZyhcIltITVJdICAtIFwiICsgbW9kdWxlSWQpO1xyXG5cdFx0fSk7XHJcblx0fVxyXG59O1xyXG5cblxuXG4vKioqKioqKioqKioqKioqKipcbiAqKiBXRUJQQUNLIEZPT1RFUlxuICoqICh3ZWJwYWNrKS9ob3QvbG9nLWFwcGx5LXJlc3VsdC5qc1xuICoqIG1vZHVsZSBpZCA9IDJcbiAqKiBtb2R1bGUgY2h1bmtzID0gMFxuICoqLyJdLCJzb3VyY2VSb290IjoiIn0=");
 
 /***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(__dirname) {"use strict";
-	
-	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
-	
-	var path = _interopRequire(__webpack_require__(5));
-	
-	var http = _interopRequire(__webpack_require__(6));
-	
-	var express = _interopRequire(__webpack_require__(7));
-	
-	var socketio = _interopRequire(__webpack_require__(4));
-	
-	var index = _interopRequire(__webpack_require__(8));
-	
-	var page = _interopRequire(__webpack_require__(10));
-	
-	var app = express();
-	app.use(express["static"](path.join(__dirname, "../static")));
-	
-	var server = http.createServer(app);
-	var io = socketio(server);
-	
-	function broadcastFrom(socket, point) {
-	  var data = {
-	    color: socket.color,
-	    point: point,
-	    lastPoint: socket.lastPoint
-	  };
-	  socket.broadcast.emit("data", data);
-	  socket.emit("data", data);
-	  socket.lastPoint = point;
-	}
-	
-	function getColor() {
-	  return "rgb(" + (Math.random() * 150 + 105 | 0) + "," + (Math.random() * 150 + 105 | 0) + "," + (Math.random() * 150 + 105 | 0) + ")";
-	}
-	
-	var sockets = [];
-	io.on("connection", function (socket) {
-	  sockets.push(socket);
-	  socket.color = getColor();
-	
-	  socket.on("data", function (msg) {
-	    broadcastFrom(socket, msg);
-	  });
-	
-	  socket.on("disconnect", function () {
-	    sockets = sockets.filter(function (s) {
-	      return s !== socket;
-	    });
-	  });
-	});
-	
-	function __eval() {}
-	
-	module.exports = server;
-	
-	// sockets.forEach((s, i) => {
-	//   s.color = getColor();
-	//   console.log('socket' + i, s.color);
-	// });
-
-	/* HOT PATCH LOADER */ var __moduleBindings = ["broadcastFrom","getColor","__eval"]; if(true) {
-	  module.hot.accept(function(err) {
-	    console.log('[HMR] Error accepting: ' + err);
-	  });
-
-	  var getEvalSource = function(func) {
-	    var code = func.toString();
-	    var m = code.match(/^function\s+__eval\s*\((.*)\)\s*\{([\s\S]*)\}$/i);
-	    if(!m) {
-	      return null;
-	    }
-	    var args = m[1];
-	    var body = m[2];
-	    var scope = {};
-
-	    if(args.trim()) {
-	      args.split(',').forEach(function(arg) {
-	        if(arg.indexOf('=') !== -1) {
-	          var p = arg.split('=');
-	          scope[p[0].trim()] = JSON.parse(p[1]);
-	        }
-	        else {
-	          scope[arg.trim()] = undefined;
-	        }
-	      });
-	    }
-
-	    return { body: body, scope: scope };
-	  }
-
-	  var injectScope = function(scope, code) {
-	    // Take an explicit scope object and inject it so that
-	    // `code` runs in context of it
-	    var injected = Object.keys(scope).map(function(binding) {
-	      return 'var ' + binding + ' = evalScope.' + binding + ';'
-	    }).join(' ');
-
-	    // Update our scope object with any modifications
-	    var extracted = Object.keys(scope).map(function(binding) {
-	      return 'evalScope.' + binding + ' = ' + binding + ';';
-	    }).join(' ');
-
-	    return injected + code + extracted;
-	  }
-
-	  var bindings = __moduleBindings;
-
-	  if(!module.hot.data) {
-	    // First time loading. Try and patch something.
-	    var patchedBindings = {};
-	    var evalScope = {};
-
-	    var moduleEvalWithScope = function(frame) {
-	      // Update the scope to reflect only the values specified as
-	      // arguments to the __eval function. Copy over values from the
-	      // existing scope and ignore the rest.
-	      Object.keys(evalScope).forEach(function(arg) {
-	        if(arg in frame.scope) {
-	          frame.scope[arg] = evalScope[arg];
-	        }
-	      });
-	      evalScope = frame.scope;
-
-	      var code = injectScope(evalScope, frame.body);
-	      return eval(code);
-	    }
-
-	    var moduleEval = function(code) {
-	      return eval(code);
-	    }
-
-	    bindings.forEach(function(binding) {
-	      var f = eval(binding);
-
-	      if(typeof f === 'function' && binding !== '__eval') {
-	        var patched = function() {
-	          if(patchedBindings[binding]) {
-	            return patchedBindings[binding].apply(this, arguments);
-	          }
-	          else {
-	            return f.apply(this, arguments);
-	          }
-	        };
-	        patched.prototype = f.prototype;
-
-	        eval(binding + ' = patched;\n');
-
-	        if(module.exports[binding]) {
-	          module.exports[binding] = patched;
-	        }
-	      }
-	    });
-
-	    module.hot.dispose(function(data) {
-	      data.patchedBindings = patchedBindings;
-	      data.moduleEval = moduleEval;
-	      data.moduleEvalWithScope = moduleEvalWithScope;
-	    });
-	  }
-	  else {
-	    var patchedBindings = module.hot.data.patchedBindings;
-
-	    bindings.forEach(function(binding) {
-	      var f = eval(binding);
-
-	      if(typeof f === 'function' && binding !== '__eval') {
-	        // We need to reify the function in the original module so
-	        // it references any of the original state. Strip the name
-	        // and simply eval it.
-	        var funcCode = (
-	          '(' + f.toString().replace(/^function \w+\(/, 'function (') + ')'
-	        );
-	        patchedBindings[binding] = module.hot.data.moduleEval(funcCode);
-	      }
-	    });
-
-	    if(typeof __eval === 'function') {
-	      try {
-	        module.hot.data.moduleEvalWithScope(getEvalSource(__eval));
-	      }
-	      catch(e) {
-	        console.log('error evaling: ' + e);
-	      }
-	    }
-
-	    module.hot.dispose(function(data) {
-	      data.patchedBindings = patchedBindings;
-	      data.moduleEval = module.hot.data.moduleEval;
-	      data.moduleEvalWithScope = module.hot.data.moduleEvalWithScope;
-	    });
-	  }
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, "src"))
-
-/***/ },
+/* 3 */,
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = require("socket.io");
+	eval("module.exports = require(\"express\");\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vZXh0ZXJuYWwgXCJleHByZXNzXCI/ZDJkMiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSIsImZpbGUiOiI0LmpzIiwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPSByZXF1aXJlKFwiZXhwcmVzc1wiKTtcblxuXG4vKioqKioqKioqKioqKioqKipcbiAqKiBXRUJQQUNLIEZPT1RFUlxuICoqIGV4dGVybmFsIFwiZXhwcmVzc1wiXG4gKiogbW9kdWxlIGlkID0gNFxuICoqIG1vZHVsZSBjaHVua3MgPSAwXG4gKiovIl0sInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
 /* 5 */
 /***/ function(module, exports) {
 
-	module.exports = require("path");
+	eval("module.exports = require(\"morgan\");\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vZXh0ZXJuYWwgXCJtb3JnYW5cIj8xOWVmIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBIiwiZmlsZSI6IjUuanMiLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoXCJtb3JnYW5cIik7XG5cblxuLyoqKioqKioqKioqKioqKioqXG4gKiogV0VCUEFDSyBGT09URVJcbiAqKiBleHRlcm5hbCBcIm1vcmdhblwiXG4gKiogbW9kdWxlIGlkID0gNVxuICoqIG1vZHVsZSBjaHVua3MgPSAwXG4gKiovIl0sInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	module.exports = require("http");
-
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	module.exports = require("express");
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
-	
-	var t = _interopRequire(__webpack_require__(9));
-	
-	module.exports = function (req, res) {
-	  var arr = JSON.parse(req.query.arr || "[]");
-	  res.send(t.map(arr, function (x) {
-	    return x + 1;
-	  }));
-	};
-	
-	/* HOT PATCH LOADER */ var __moduleBindings = []; if(true) {
-	  module.hot.accept(function(err) {
-	    console.log('[HMR] Error accepting: ' + err);
-	  });
-
-	  var getEvalSource = function(func) {
-	    var code = func.toString();
-	    var m = code.match(/^function\s+__eval\s*\((.*)\)\s*\{([\s\S]*)\}$/i);
-	    if(!m) {
-	      return null;
-	    }
-	    var args = m[1];
-	    var body = m[2];
-	    var scope = {};
-
-	    if(args.trim()) {
-	      args.split(',').forEach(function(arg) {
-	        if(arg.indexOf('=') !== -1) {
-	          var p = arg.split('=');
-	          scope[p[0].trim()] = JSON.parse(p[1]);
-	        }
-	        else {
-	          scope[arg.trim()] = undefined;
-	        }
-	      });
-	    }
-
-	    return { body: body, scope: scope };
-	  }
-
-	  var injectScope = function(scope, code) {
-	    // Take an explicit scope object and inject it so that
-	    // `code` runs in context of it
-	    var injected = Object.keys(scope).map(function(binding) {
-	      return 'var ' + binding + ' = evalScope.' + binding + ';'
-	    }).join(' ');
-
-	    // Update our scope object with any modifications
-	    var extracted = Object.keys(scope).map(function(binding) {
-	      return 'evalScope.' + binding + ' = ' + binding + ';';
-	    }).join(' ');
-
-	    return injected + code + extracted;
-	  }
-
-	  var bindings = __moduleBindings;
-
-	  if(!module.hot.data) {
-	    // First time loading. Try and patch something.
-	    var patchedBindings = {};
-	    var evalScope = {};
-
-	    var moduleEvalWithScope = function(frame) {
-	      // Update the scope to reflect only the values specified as
-	      // arguments to the __eval function. Copy over values from the
-	      // existing scope and ignore the rest.
-	      Object.keys(evalScope).forEach(function(arg) {
-	        if(arg in frame.scope) {
-	          frame.scope[arg] = evalScope[arg];
-	        }
-	      });
-	      evalScope = frame.scope;
-
-	      var code = injectScope(evalScope, frame.body);
-	      return eval(code);
-	    }
-
-	    var moduleEval = function(code) {
-	      return eval(code);
-	    }
-
-	    bindings.forEach(function(binding) {
-	      var f = eval(binding);
-
-	      if(typeof f === 'function' && binding !== '__eval') {
-	        var patched = function() {
-	          if(patchedBindings[binding]) {
-	            return patchedBindings[binding].apply(this, arguments);
-	          }
-	          else {
-	            return f.apply(this, arguments);
-	          }
-	        };
-	        patched.prototype = f.prototype;
-
-	        eval(binding + ' = patched;\n');
-
-	        if(module.exports[binding]) {
-	          module.exports[binding] = patched;
-	        }
-	      }
-	    });
-
-	    module.hot.dispose(function(data) {
-	      data.patchedBindings = patchedBindings;
-	      data.moduleEval = moduleEval;
-	      data.moduleEvalWithScope = moduleEvalWithScope;
-	    });
-	  }
-	  else {
-	    var patchedBindings = module.hot.data.patchedBindings;
-
-	    bindings.forEach(function(binding) {
-	      var f = eval(binding);
-
-	      if(typeof f === 'function' && binding !== '__eval') {
-	        // We need to reify the function in the original module so
-	        // it references any of the original state. Strip the name
-	        // and simply eval it.
-	        var funcCode = (
-	          '(' + f.toString().replace(/^function \w+\(/, 'function (') + ')'
-	        );
-	        patchedBindings[binding] = module.hot.data.moduleEval(funcCode);
-	      }
-	    });
-
-	    if(typeof __eval === 'function') {
-	      try {
-	        module.hot.data.moduleEvalWithScope(getEvalSource(__eval));
-	      }
-	      catch(e) {
-	        console.log('error evaling: ' + e);
-	      }
-	    }
-
-	    module.hot.dispose(function(data) {
-	      data.patchedBindings = patchedBindings;
-	      data.moduleEval = module.hot.data.moduleEval;
-	      data.moduleEvalWithScope = module.hot.data.moduleEvalWithScope;
-	    });
-	  }
-	}
-
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	module.exports = require("transducers.js");
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	module.exports = function (req, res) {
-	  res.send("page");
-	};
-	
-	/* HOT PATCH LOADER */ var __moduleBindings = []; if(true) {
-	  module.hot.accept(function(err) {
-	    console.log('[HMR] Error accepting: ' + err);
-	  });
-
-	  var getEvalSource = function(func) {
-	    var code = func.toString();
-	    var m = code.match(/^function\s+__eval\s*\((.*)\)\s*\{([\s\S]*)\}$/i);
-	    if(!m) {
-	      return null;
-	    }
-	    var args = m[1];
-	    var body = m[2];
-	    var scope = {};
-
-	    if(args.trim()) {
-	      args.split(',').forEach(function(arg) {
-	        if(arg.indexOf('=') !== -1) {
-	          var p = arg.split('=');
-	          scope[p[0].trim()] = JSON.parse(p[1]);
-	        }
-	        else {
-	          scope[arg.trim()] = undefined;
-	        }
-	      });
-	    }
-
-	    return { body: body, scope: scope };
-	  }
-
-	  var injectScope = function(scope, code) {
-	    // Take an explicit scope object and inject it so that
-	    // `code` runs in context of it
-	    var injected = Object.keys(scope).map(function(binding) {
-	      return 'var ' + binding + ' = evalScope.' + binding + ';'
-	    }).join(' ');
-
-	    // Update our scope object with any modifications
-	    var extracted = Object.keys(scope).map(function(binding) {
-	      return 'evalScope.' + binding + ' = ' + binding + ';';
-	    }).join(' ');
-
-	    return injected + code + extracted;
-	  }
-
-	  var bindings = __moduleBindings;
-
-	  if(!module.hot.data) {
-	    // First time loading. Try and patch something.
-	    var patchedBindings = {};
-	    var evalScope = {};
-
-	    var moduleEvalWithScope = function(frame) {
-	      // Update the scope to reflect only the values specified as
-	      // arguments to the __eval function. Copy over values from the
-	      // existing scope and ignore the rest.
-	      Object.keys(evalScope).forEach(function(arg) {
-	        if(arg in frame.scope) {
-	          frame.scope[arg] = evalScope[arg];
-	        }
-	      });
-	      evalScope = frame.scope;
-
-	      var code = injectScope(evalScope, frame.body);
-	      return eval(code);
-	    }
-
-	    var moduleEval = function(code) {
-	      return eval(code);
-	    }
-
-	    bindings.forEach(function(binding) {
-	      var f = eval(binding);
-
-	      if(typeof f === 'function' && binding !== '__eval') {
-	        var patched = function() {
-	          if(patchedBindings[binding]) {
-	            return patchedBindings[binding].apply(this, arguments);
-	          }
-	          else {
-	            return f.apply(this, arguments);
-	          }
-	        };
-	        patched.prototype = f.prototype;
-
-	        eval(binding + ' = patched;\n');
-
-	        if(module.exports[binding]) {
-	          module.exports[binding] = patched;
-	        }
-	      }
-	    });
-
-	    module.hot.dispose(function(data) {
-	      data.patchedBindings = patchedBindings;
-	      data.moduleEval = moduleEval;
-	      data.moduleEvalWithScope = moduleEvalWithScope;
-	    });
-	  }
-	  else {
-	    var patchedBindings = module.hot.data.patchedBindings;
-
-	    bindings.forEach(function(binding) {
-	      var f = eval(binding);
-
-	      if(typeof f === 'function' && binding !== '__eval') {
-	        // We need to reify the function in the original module so
-	        // it references any of the original state. Strip the name
-	        // and simply eval it.
-	        var funcCode = (
-	          '(' + f.toString().replace(/^function \w+\(/, 'function (') + ')'
-	        );
-	        patchedBindings[binding] = module.hot.data.moduleEval(funcCode);
-	      }
-	    });
-
-	    if(typeof __eval === 'function') {
-	      try {
-	        module.hot.data.moduleEvalWithScope(getEvalSource(__eval));
-	      }
-	      catch(e) {
-	        console.log('error evaling: ' + e);
-	      }
-	    }
-
-	    module.hot.dispose(function(data) {
-	      data.patchedBindings = patchedBindings;
-	      data.moduleEval = module.hot.data.moduleEval;
-	      data.moduleEvalWithScope = module.hot.data.moduleEvalWithScope;
-	    });
-	  }
-	}
-
-
-/***/ },
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
 /* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	/*globals __resourceQuery */
-	if(true) {
-		function checkForUpdate(fromUpdate) {
-			module.hot.check(function(err, updatedModules) {
-				if(err) {
-					if(module.hot.status() in {
-							abort: 1,
-							fail: 1
-						}) {
-						console.warn("[HMR] Cannot apply update.");
-						console.warn("[HMR] " + err.stack || err.message);
-						console.warn("[HMR] You need to restart the application!");
-					} else {
-						console.warn("[HMR] Update failed: " + err.stack || err.message);
-					}
-					return;
-				}
-				if(!updatedModules) {
-					if(fromUpdate)
-						console.log("[HMR] Update applied.");
-					else
-						console.warn("[HMR] Cannot find update.");
-					return;
-				}
-	
-				module.hot.apply({
-					ignoreUnaccepted: true
-				}, function(err, renewedModules) {
-					if(err) {
-						if(module.hot.status() in {
-								abort: 1,
-								fail: 1
-							}) {
-							console.warn("[HMR] Cannot apply update (Need to do a full reload!)");
-							console.warn("[HMR] " + err.stack || err.message);
-							console.warn("[HMR] You need to restart the application!");
-						} else {
-							console.warn("[HMR] Update failed: " + err.stack || err.message);
-						}
-						return;
-					}
-	
-					__webpack_require__(16)(updatedModules, renewedModules);
-	
-					checkForUpdate(true);
-				});
-			});
-		}
-	
-		process.on(__resourceQuery.substr(1) || "SIGUSR2", function() {
-			if(module.hot.status() !== "idle") {
-				console.warn("[HMR] Got signal but currently in " + module.hot.status() + " state.");
-				console.warn("[HMR] Need to be in idle state to start hot update.");
-				return;
-			}
-	
-			checkForUpdate();
-		});
-	} else {
-		throw new Error("[HMR] Hot Module Replacement is disabled.");
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, ""))
+	eval("var express = __webpack_require__(4),\n    server  = express(),\n    morgan  = __webpack_require__(5),\n\n    conf    = __webpack_require__(13),\n    port    = conf.dev.port,\n    host    = conf.dev.host\n;\n\nserver.use(morgan('combined', {\n    skip: function (req, res) {\n\n    \treturn res.statusCode < 400;\n    }\n}));\n\nserver.use( express.static( \"./src/public\" ));\nserver.use( '/browser_scripts', express.static( './node_modules/angular2/bundles/') );\n\nserver.listen( port , host , function (){\n\n    console.log(\"Server running on \" + host + \" : \" + port + \", yay!\");\n\n} );\n\nfunction __eval() {\n  console.log('alo alo ');\n}\n\n\n/* HOT PATCH LOADER */ var __moduleBindings = [\"__eval\"]; if(true) {\n  module.hot.accept(function(err) {\n    console.log('[HMR] Error accepting: ' + err);\n  });\n\n  var getEvalSource = function(func) {\n    var code = func.toString();\n    var m = code.match(/^function\\s+__eval\\s*\\((.*)\\)\\s*\\{([\\s\\S]*)\\}$/i);\n    if(!m) {\n      return null;\n    }\n    var args = m[1];\n    var body = m[2];\n    var scope = {};\n\n    if(args.trim()) {\n      args.split(',').forEach(function(arg) {\n        if(arg.indexOf('=') !== -1) {\n          var p = arg.split('=');\n          scope[p[0].trim()] = JSON.parse(p[1]);\n        }\n        else {\n          scope[arg.trim()] = undefined;\n        }\n      });\n    }\n\n    return { body: body, scope: scope };\n  }\n\n  var injectScope = function(scope, code) {\n    // Take an explicit scope object and inject it so that\n    // `code` runs in context of it\n    var injected = Object.keys(scope).map(function(binding) {\n      return 'var ' + binding + ' = evalScope.' + binding + ';'\n    }).join(' ');\n\n    // Update our scope object with any modifications\n    var extracted = Object.keys(scope).map(function(binding) {\n      return 'evalScope.' + binding + ' = ' + binding + ';';\n    }).join(' ');\n\n    return injected + code + extracted;\n  }\n\n  var bindings = __moduleBindings;\n\n  if(!module.hot.data) {\n    // First time loading. Try and patch something.\n    var patchedBindings = {};\n    var evalScope = {};\n\n    var moduleEvalWithScope = function(frame) {\n      // Update the scope to reflect only the values specified as\n      // arguments to the __eval function. Copy over values from the\n      // existing scope and ignore the rest.\n      Object.keys(evalScope).forEach(function(arg) {\n        if(arg in frame.scope) {\n          frame.scope[arg] = evalScope[arg];\n        }\n      });\n      evalScope = frame.scope;\n\n      var code = injectScope(evalScope, frame.body);\n      return eval(code);\n    }\n\n    var moduleEval = function(code) {\n      return eval(code);\n    }\n\n    bindings.forEach(function(binding) {\n      var f = eval(binding);\n\n      if(typeof f === 'function' && binding !== '__eval') {\n        var patched = function() {\n          if(patchedBindings[binding]) {\n            return patchedBindings[binding].apply(this, arguments);\n          }\n          else {\n            return f.apply(this, arguments);\n          }\n        };\n        patched.prototype = f.prototype;\n\n        eval(binding + ' = patched;\\n');\n\n        if(module.exports[binding]) {\n          module.exports[binding] = patched;\n        }\n      }\n    });\n\n    module.hot.dispose(function(data) {\n      data.patchedBindings = patchedBindings;\n      data.moduleEval = moduleEval;\n      data.moduleEvalWithScope = moduleEvalWithScope;\n    });\n  }\n  else {\n    var patchedBindings = module.hot.data.patchedBindings;\n\n    bindings.forEach(function(binding) {\n      var f = eval(binding);\n\n      if(typeof f === 'function' && binding !== '__eval') {\n        // We need to reify the function in the original module so\n        // it references any of the original state. Strip the name\n        // and simply eval it.\n        var funcCode = (\n          '(' + f.toString().replace(/^function \\w+\\(/, 'function (') + ')'\n        );\n        patchedBindings[binding] = module.hot.data.moduleEval(funcCode);\n      }\n    });\n\n    if(typeof __eval === 'function') {\n      try {\n        module.hot.data.moduleEvalWithScope(getEvalSource(__eval));\n      }\n      catch(e) {\n        console.log('error evaling: ' + e);\n      }\n    }\n\n    module.hot.dispose(function(data) {\n      data.patchedBindings = patchedBindings;\n      data.moduleEval = module.hot.data.moduleEval;\n      data.moduleEvalWithScope = module.hot.data.moduleEvalWithScope;\n    });\n  }\n}\n\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9hcHAuanM/ZDhlZSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsImZpbGUiOiIxMi5qcyIsInNvdXJjZXNDb250ZW50IjpbInZhciBleHByZXNzID0gcmVxdWlyZSgnZXhwcmVzcycpLFxuICAgIHNlcnZlciAgPSBleHByZXNzKCksXG4gICAgbW9yZ2FuICA9IHJlcXVpcmUoJ21vcmdhbicpLFxuXG4gICAgY29uZiAgICA9IHJlcXVpcmUoJy4vc3JjL3NlcnZlci9jb25mLmpzJyksXG4gICAgcG9ydCAgICA9IGNvbmYuZGV2LnBvcnQsXG4gICAgaG9zdCAgICA9IGNvbmYuZGV2Lmhvc3Rcbjtcblxuc2VydmVyLnVzZShtb3JnYW4oJ2NvbWJpbmVkJywge1xuICAgIHNraXA6IGZ1bmN0aW9uIChyZXEsIHJlcykge1xuXG4gICAgXHRyZXR1cm4gcmVzLnN0YXR1c0NvZGUgPCA0MDA7XG4gICAgfVxufSkpO1xuXG5zZXJ2ZXIudXNlKCBleHByZXNzLnN0YXRpYyggXCIuL3NyYy9wdWJsaWNcIiApKTtcbnNlcnZlci51c2UoICcvYnJvd3Nlcl9zY3JpcHRzJywgZXhwcmVzcy5zdGF0aWMoICcuL25vZGVfbW9kdWxlcy9hbmd1bGFyMi9idW5kbGVzLycpICk7XG5cbnNlcnZlci5saXN0ZW4oIHBvcnQgLCBob3N0ICwgZnVuY3Rpb24gKCl7XG5cbiAgICBjb25zb2xlLmxvZyhcIlNlcnZlciBydW5uaW5nIG9uIFwiICsgaG9zdCArIFwiIDogXCIgKyBwb3J0ICsgXCIsIHlheSFcIik7XG5cbn0gKTtcblxuZnVuY3Rpb24gX19ldmFsKCkge1xuICBjb25zb2xlLmxvZygnYWxvIGFsbyAnKTtcbn1cblxuXG5cbi8qKiBXRUJQQUNLIEZPT1RFUiAqKlxuICoqIC4vYXBwLmpzXG4gKiovIl0sInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
-/* 16 */
-/***/ function(module, exports) {
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	module.exports = function(updatedModules, renewedModules) {
-		var unacceptedModules = updatedModules.filter(function(moduleId) {
-			return renewedModules && renewedModules.indexOf(moduleId) < 0;
-		});
-	
-		if(unacceptedModules.length > 0) {
-			console.warn("[HMR] The following modules couldn't be hot updated: (They would need a full reload!)");
-			unacceptedModules.forEach(function(moduleId) {
-				console.warn("[HMR]  - " + moduleId);
-			});
-		}
-	
-		if(!renewedModules || renewedModules.length === 0) {
-			console.log("[HMR] Nothing hot updated.");
-		} else {
-			console.log("[HMR] Updated modules:");
-			renewedModules.forEach(function(moduleId) {
-				console.log("[HMR]  - " + moduleId);
-			});
-		}
-	};
-
+	eval("module.exports = {\n    dev : {\n        port : 3001,\n        host : \"0.0.0.0\"\n    }\n}\n\n/* HOT PATCH LOADER */ var __moduleBindings = []; if(true) {\n  module.hot.accept(function(err) {\n    console.log('[HMR] Error accepting: ' + err);\n  });\n\n  var getEvalSource = function(func) {\n    var code = func.toString();\n    var m = code.match(/^function\\s+__eval\\s*\\((.*)\\)\\s*\\{([\\s\\S]*)\\}$/i);\n    if(!m) {\n      return null;\n    }\n    var args = m[1];\n    var body = m[2];\n    var scope = {};\n\n    if(args.trim()) {\n      args.split(',').forEach(function(arg) {\n        if(arg.indexOf('=') !== -1) {\n          var p = arg.split('=');\n          scope[p[0].trim()] = JSON.parse(p[1]);\n        }\n        else {\n          scope[arg.trim()] = undefined;\n        }\n      });\n    }\n\n    return { body: body, scope: scope };\n  }\n\n  var injectScope = function(scope, code) {\n    // Take an explicit scope object and inject it so that\n    // `code` runs in context of it\n    var injected = Object.keys(scope).map(function(binding) {\n      return 'var ' + binding + ' = evalScope.' + binding + ';'\n    }).join(' ');\n\n    // Update our scope object with any modifications\n    var extracted = Object.keys(scope).map(function(binding) {\n      return 'evalScope.' + binding + ' = ' + binding + ';';\n    }).join(' ');\n\n    return injected + code + extracted;\n  }\n\n  var bindings = __moduleBindings;\n\n  if(!module.hot.data) {\n    // First time loading. Try and patch something.\n    var patchedBindings = {};\n    var evalScope = {};\n\n    var moduleEvalWithScope = function(frame) {\n      // Update the scope to reflect only the values specified as\n      // arguments to the __eval function. Copy over values from the\n      // existing scope and ignore the rest.\n      Object.keys(evalScope).forEach(function(arg) {\n        if(arg in frame.scope) {\n          frame.scope[arg] = evalScope[arg];\n        }\n      });\n      evalScope = frame.scope;\n\n      var code = injectScope(evalScope, frame.body);\n      return eval(code);\n    }\n\n    var moduleEval = function(code) {\n      return eval(code);\n    }\n\n    bindings.forEach(function(binding) {\n      var f = eval(binding);\n\n      if(typeof f === 'function' && binding !== '__eval') {\n        var patched = function() {\n          if(patchedBindings[binding]) {\n            return patchedBindings[binding].apply(this, arguments);\n          }\n          else {\n            return f.apply(this, arguments);\n          }\n        };\n        patched.prototype = f.prototype;\n\n        eval(binding + ' = patched;\\n');\n\n        if(module.exports[binding]) {\n          module.exports[binding] = patched;\n        }\n      }\n    });\n\n    module.hot.dispose(function(data) {\n      data.patchedBindings = patchedBindings;\n      data.moduleEval = moduleEval;\n      data.moduleEvalWithScope = moduleEvalWithScope;\n    });\n  }\n  else {\n    var patchedBindings = module.hot.data.patchedBindings;\n\n    bindings.forEach(function(binding) {\n      var f = eval(binding);\n\n      if(typeof f === 'function' && binding !== '__eval') {\n        // We need to reify the function in the original module so\n        // it references any of the original state. Strip the name\n        // and simply eval it.\n        var funcCode = (\n          '(' + f.toString().replace(/^function \\w+\\(/, 'function (') + ')'\n        );\n        patchedBindings[binding] = module.hot.data.moduleEval(funcCode);\n      }\n    });\n\n    if(typeof __eval === 'function') {\n      try {\n        module.hot.data.moduleEvalWithScope(getEvalSource(__eval));\n      }\n      catch(e) {\n        console.log('error evaling: ' + e);\n      }\n    }\n\n    module.hot.dispose(function(data) {\n      data.patchedBindings = patchedBindings;\n      data.moduleEval = module.hot.data.moduleEval;\n      data.moduleEvalWithScope = module.hot.data.moduleEvalWithScope;\n    });\n  }\n}\n\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvc2VydmVyL2NvbmYuanM/ZTlkYyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsQyIsImZpbGUiOiIxMy5qcyIsInNvdXJjZXNDb250ZW50IjpbIm1vZHVsZS5leHBvcnRzID0ge1xuICAgIGRldiA6IHtcbiAgICAgICAgcG9ydCA6IDMwMDEsXG4gICAgICAgIGhvc3QgOiBcIjAuMC4wLjBcIlxuICAgIH1cbn1cblxuXG4vKiogV0VCUEFDSyBGT09URVIgKipcbiAqKiAuL3NyYy9zZXJ2ZXIvY29uZi5qc1xuICoqLyJdLCJzb3VyY2VSb290IjoiIn0=");
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=backend.js.map
