@@ -18,14 +18,14 @@ var deepmerge = DeepMerge(function(target, source, key) {
 var defaultConfig = {
   module: {
     loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loaders: ['monkey-hot', 'babel'] },
+      { test: /\.js$/, exclude: /node_modules/, loaders: ['monkey-hot'] }
     ]
   }
 };
 
 if(process.env.NODE_ENV !== 'production') {
-  //defaultConfig.devtool = '#eval-source-map';
-  defaultConfig.devtool = 'source-map';
+  defaultConfig.devtool = '#eval-source-map';
+  //defaultConfig.devtool = 'source-map';
   defaultConfig.debug = true;
 }
 
@@ -39,12 +39,32 @@ var frontendConfig = config({
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
-    './static/js/main.js'
+    path.join(__dirname, 'node_modules/angular2/bundles/angular2-polyfills.js'),
+    path.join(__dirname, 'src/public/app/app.ts')
   ],
   output: {
-    path: path.join(__dirname, 'static/build'),
+    path: path.join(__dirname, 'src/public/build'),
     publicPath: 'http://localhost:3000/build',
     filename: 'frontend.js'
+  },
+  module: {
+    resolve: {
+      // ensure loader extensions match
+      extensions: prepend(['.ts','.js','.json','.css','.html'], '.async') // ensure .async.ts etc also works
+    },
+    noParse: [ /zone\.js\/build\/.+/, /angular2\/bundles\/.+/ ],
+    loaders: [
+      { test: /\.ts$/, exclude: /node_modules/, loaders: ['monkey-hot', 'ts-loader'] },
+
+      // Support for *.json files.
+      { test: /\.json$/,  loaders: ['monkey-hot', 'json-loader'] },
+
+      // Support for CSS as raw text
+      { test: /\.css$/,   loaders: ['monkey-hot', 'raw-loader'] },
+
+      // support for .html as raw text
+      { test: /\.html$/,  loaders: ['monkey-hot', 'raw-loader'], exclude: [ './src/public/build/index.html' ] }
+    ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin({ quiet: true })
@@ -61,7 +81,7 @@ var nodeModules = fs.readdirSync('node_modules')
 var backendConfig = config({
   entry: [
     'webpack/hot/signal.js',
-    './src/main.js'
+    './app.js'
   ],
   target: 'node',
   output: {
@@ -160,3 +180,14 @@ gulp.task('run', ['backend-watch', 'frontend-watch'], function() {
     console.log('Patched!');
   });
 });
+
+
+function prepend(extensions, args) {
+  args = args || [];
+  if (!Array.isArray(args)) { args = [args] }
+  return extensions.reduce(function(memo, val) {
+    return memo.concat(val, args.map(function(prefix) {
+      return prefix + val
+    }));
+  }, ['']);
+}
